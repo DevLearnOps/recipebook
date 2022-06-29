@@ -56,6 +56,9 @@ class Base(dict):
         return cls.__collection__.update_one(*args, **kwargs)
 
     def save(self):
+        """
+        Persist object into database collection
+        """
         if not self._id:
             res = self.__collection__.insert_one(self)
             self["_id"] = res.inserted_id
@@ -67,10 +70,16 @@ class Base(dict):
             )
 
     def reload(self):
+        """
+        Reload object's attributes from database
+        """
         if self._id:
             self.update(self.__collection__.find_one({"_id": ObjectId(self._id)}))
 
     def remove(self) -> Optional[DeleteResult]:
+        """
+        Remove object from database
+        """
         if self._id:
             result = self.__collection__.delete_one({"_id": ObjectId(self._id)})
             self.clear()
@@ -80,29 +89,42 @@ class Base(dict):
 
 
 class Recipe(Base):
+    """
+    A Python object to represent the Recipes collection in MongoDB
+    """
+
     __collection__ = db["recipe"]
 
 
-def read_image(filename):
-    file = fs.find_one({"filename": filename})
-    if file:
-        return file.read()
+class FileStorage:
+    """
+    A Python object to interact with MongoDB file storage
+    """
 
-    with open("app/static/images/default_recipe_img.png", "rb") as f:
-        contents = f.read()
-    return contents
+    __fs__ = fs
+    __default_recipe_img__ = "app/static/images/default_recipe_img.png"
 
+    @classmethod
+    def read_image(cls, filename):
+        file = cls.__fs__.find_one({"filename": filename})
+        if file:
+            return file.read()
 
-def store_image(filename, contents):
-    remove_images(filename)
-    logger.info(f"Storing image with filename [{filename}]")
-    fs.put(contents, filename=filename)
+        with open(cls.__default_recipe_img__, "rb") as f:
+            contents = f.read()
+        return contents
 
+    @classmethod
+    def store_image(cls, filename, contents):
+        cls.remove_images(filename)
+        logger.info(f"Storing image with filename [{filename}]")
+        cls.__fs__.put(contents, filename=filename)
 
-def remove_images(filename):
-    logger.info(f"Removing existing images with filename [{filename}]")
-    for existing in fs.find({"filename": filename}):
-        fs.delete(existing._id)
+    @classmethod
+    def remove_images(cls, filename):
+        logger.info(f"Removing existing images with filename [{filename}]")
+        for existing in cls.__fs__.find({"filename": filename}):
+            cls.__fs__.delete(existing._id)
 
 
 def initialize():
@@ -139,7 +161,7 @@ def import_sample_data():
             src_img = IMG_DIR + file.split(".")[0] + ".jpg"
             with open(src_img, "rb") as f:
                 contents = f.read()
-            fs.put(contents, filename=str(recipe._id))
+            FileStorage.store_image(filename=str(recipe._id), contents=contents)
 
 
 initialize()

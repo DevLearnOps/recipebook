@@ -12,6 +12,7 @@ pymongo = "*"
 flask-markdown = "*"
 logzero = "*"
 pyyaml = "*"
+python-dotenv = "*"
 
 [dev-packages]
 black = "*"
