@@ -85,7 +85,24 @@ class Recipe(Base):
 
 def read_image(filename):
     file = fs.find_one({"filename": filename})
-    return file.read()
+    if file:
+        return file.read()
+
+    with open("app/static/images/default_recipe_img.png", "rb") as f:
+        contents = f.read()
+    return contents
+
+
+def store_image(filename, contents):
+    remove_images(filename)
+    logger.info(f"Storing image with filename [{filename}]")
+    fs.put(contents, filename=filename)
+
+
+def remove_images(filename):
+    logger.info(f"Removing existing images with filename [{filename}]")
+    for existing in fs.find({"filename": filename}):
+        fs.delete(existing._id)
 
 
 def initialize():

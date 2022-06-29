@@ -2,9 +2,44 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<h1>Edit or Create Recipe</h1>
-
 <div class="row">
+    <div class="col-lg-9"> <h1>Edit or Create Recipe</h1></div>
+    <div class="col-lg-3">
+        <a class="btn btn-secondary float-right btn-top" href="{{ url_for('recipe', id=rec_id) }}">Back</a>
+    </div>
+</div>
+
+<div class="row row-edit-section">
+    <div class="col-md-3">
+        {% if rec_id %}
+        <img style="width: 150px;" src="{{ url_for('image', id=rec_id) }}">
+        {% else %}
+        <img style="width: 150px;" src="{{ url_for('static', filename='images/default_recipe_img.png') }}">
+        {% endif %}
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+        <form method="post" action="{{ url_for('upload_image') }}" enctype="multipart/form-data">
+            <input {% if not rec_id %}disabled{% endif %} type="file" name="file" autocomplete="off" required>
+            <input type="hidden" name="filename" value="{{ rec_id }}">
+            <input type="hidden" name="recipe_id" value="{{ rec_id }}">
+            <input {% if not rec_id %}disabled{% endif %} class="btn btn-success" type="submit" value="Upload">
+            {% if not rec_id %}
+            <p class="text-secondary text-sm mt-2">Save the new recipe before uploading a cover image.</p>
+            {% endif %} 
+        </form>
+        </div>
+        <div class="row mt-3">
+        <form {% if not rec_id %}hidden{% endif %} method="post" action="{{ url_for('remove_image') }}" enctype="multipart/form-data">
+            <input type="hidden" name="filename" value="{{ rec_id }}">
+            <input type="hidden" name="recipe_id" value="{{ rec_id }}">
+            <input class="btn btn-secondary" type="submit" value="Remove cover image">
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="row row-edit-section">
     <div class="col-md-12">
         {{ wtf.quick_form(form, button_map={'save': 'primary'}) }}
     </div>
