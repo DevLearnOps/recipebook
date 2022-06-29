@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h1>Search results</h1>
+
+<div>
+    <ul>
+        {% for recipe in results %}
+        <li><a href="{{ url_for('recipe', id=recipe._id) }}">
+            {{ recipe.name }}
+        </a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

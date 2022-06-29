@@ -1,0 +1,26 @@
+textarea#ingredients {
+    height: 150px;
+}
+
+textarea#directions {
+    height: 400px;
+}
+
+img {
+    max-width: 500px;
+}
+
+a.navbar-brand > img {
+    width: 55px;
+}
+
+.btn-top {
+    margin: 8px 2px 8px 2px;
+}
+
+.hr-line {
+    width: 100%;
+    position: relative;
+    margin: 15px 0px 15px 0px;
+    border-bottom: 1px solid #000;
+}

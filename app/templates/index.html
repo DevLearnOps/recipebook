@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h1>Welcome to My Recipe Book!</h1>
+
+<div>
+    <h2>All recipes</h2>
+    <ul>
+        {% for recipe in recipes %}
+        <li><a href="{{ url_for('recipe', id=recipe._id) }}">
+            {{ recipe.name }}
+        </a></li>
+        {% endfor %}
+    </ul>
+
+    {% if recipes|length == 0 %}
+    No recipes found. Would you like some sample data?<br>
+    <a class="btn btn-info" href="/admin/sampledata" style="margin-top: 20px;">Import sample data</a>
+
+    {% endif %}
+</div>
+{% endblock %}
