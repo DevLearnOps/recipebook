@@ -38,7 +38,7 @@
         <div><p>{{ recipe.ingredients | markdown }}</p></div>
     </div>
     <div class="col-lg-6">
-        <img src="{{ url_for('image', id=recipe._id) }}"/>
+        <img class="rounded float-right" src="{{ url_for('image', id=recipe._id) }}"/>
     </div>
 </div>
 

@@ -8,6 +8,7 @@ textarea#directions {
 
 img {
     max-width: 500px;
+    max-height: 400px;
 }
 
 a.navbar-brand > img {
@@ -23,4 +24,16 @@ a.navbar-brand > img {
     position: relative;
     margin: 15px 0px 15px 0px;
     border-bottom: 1px solid #000;
+}
+
+div.row-edit-section {
+    background-color: #EDEDED;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 8px 0px 8px 0px;
+}
+
+footer {
+    background-color: #343a40 !important;
+    color: white;
 }

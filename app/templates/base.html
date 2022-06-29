@@ -16,7 +16,7 @@
 
 {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a href="#" class="navbar-brand"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+        <a href="/index" class="navbar-brand"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,7 +38,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container pb-4">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -49,7 +49,25 @@
 
         {% block app_content %}{% endblock %}
     </div>
+
+{% block footer %}
+<footer class="page-footer font-small pt-4">
+
+  <!-- Footer Elements -->
+  <div class="container">
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center pb-3">© DevLearnOps 2022
+    <a href="https://devlearnops.com">&nbsp;devlearnops.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
 {% endblock %}
+{% endblock %}
+
 
 {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
