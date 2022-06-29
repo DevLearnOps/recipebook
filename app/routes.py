@@ -1,12 +1,12 @@
-from app import app, db
-from app.db import Recipe
+from app import app
+from app.db import Recipe, FileStorage, import_sample_data
 from app.forms import RecipeForm
 from flask import render_template, flash, redirect, request, make_response
 
 
 @app.route("/admin/sampledata")
 def load_sample_data():
-    db.import_sample_data()
+    import_sample_data()
     return redirect("/index")
 
 
@@ -85,7 +85,7 @@ def upload_image():
     if recipe_id and filename:
         file = request.files["file"]
         contents = file.read()
-        db.store_image(filename=filename, contents=contents)
+        FileStorage.store_image(filename=filename, contents=contents)
 
         flash("Cover image updated successfully!")
         return redirect(f"/recipe/{recipe_id}/edit")
@@ -99,7 +99,7 @@ def remove_image():
     recipe_id = request.form["recipe_id"]
     filename = request.form["filename"]
     if recipe_id and filename:
-        db.remove_images(filename=filename)
+        FileStorage.remove_images(filename=filename)
 
         flash("Cover image deleted successfully!")
         return redirect(f"/recipe/{recipe_id}/edit")
@@ -110,7 +110,7 @@ def remove_image():
 
 @app.route("/image/<id>.jpg")
 def image(id):
-    image = db.read_image(id)
+    image = FileStorage.read_image(id)
     response = make_response(image)
     response.headers.set("Content-Type", "image/jpeg")
     response.headers.set("Content-Disposition", "attachment", filename="%s.jpg" % id)

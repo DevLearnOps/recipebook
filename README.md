@@ -41,3 +41,10 @@ cd recipebook/
 pipenv run flask run
 ```
 
+## Use RecipeBook app and import sample data
+
+Once the application server is running, the application will available at port 5001. Open this URL in your browser: http://127.0.0.1:5001/index
+
+If your Mongo database has not been initialised, the application will ask if you want to import some sample recipe data in the Homepage. Click the **Import sample data** button if you wish to populate the database with some data. If instead you want to create your own recipes, just click the **New Recipe** link in the navbar.
+
+![Create sample data](docs/img/create_sample_data.jpeg "Create sample data")
