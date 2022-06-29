@@ -2,6 +2,8 @@
 
 A simple web application that stores your favourite recipes. This demo application uses Python, Flask and MongoDB and can be used as a framework to study application development and automation!
 
+![Homepage](docs/img/homepage.jpeg "Recipebook Homepage")
+
 ## How to use this repository
 
 This repository contains the **RecipeBook** application in the `app/` directory. To run this application you need the following requirements installed:
